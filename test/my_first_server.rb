@@ -13,6 +13,6 @@ server.mount_proc '/' do |request, response|
 
 end
 
-# trap 'INT' { server.shutdown }
+# trap('INT') { server.shutdown }
 
 server.start
