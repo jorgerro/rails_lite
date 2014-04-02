@@ -13,7 +13,7 @@ class Route
     req.path =~ @pattern && req.request_method.downcase.to_sym == @http_method
   end
 
-  # use pattern to pull out route params (save for later?)
+  # use pattern to pull out route params (save for later?) -----
   # instantiate controller and call controller action
 
   def run(req, res)
