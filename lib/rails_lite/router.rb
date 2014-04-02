@@ -23,7 +23,7 @@ class Route
       # match_data_hash.each do |k,v|
       #   route_params[k.to_sym] = v
       # end
-      #to make the match data hash have symbol keys, necessary
+      # changes the match data hash keys to symbols, necessary?
 
     controller_instance = @controller_class.new(req, res, match_data_hash)
     controller_instance.invoke_action(@action_name.to_sym)
