@@ -2,10 +2,7 @@ require 'uri'
 
 
 class Params
-  # use your initialize to merge params from
-  # 1. query string
-  # 2. post body
-  # 3. route params
+  # initialize merges params from query string, post body, and route params
 
   def initialize(req, route_params = {})
     @params = {}
@@ -35,6 +32,7 @@ class Params
   end
 
   def to_s
+    JSON.generate(@params)
   end
 
   class AttributeNotFoundError < ArgumentError; end;

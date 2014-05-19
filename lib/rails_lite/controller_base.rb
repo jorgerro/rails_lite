@@ -7,7 +7,7 @@ require_relative 'session'
 class ControllerBase
   attr_reader :params, :req, :res
 
-  # setup the controller
+  # grab the request and response to populate the response
 
   def initialize(req, res, route_params = {})
     @req, @res = req, res
@@ -41,6 +41,10 @@ class ControllerBase
     unless already_rendered?
       @res.status = 302
       @res["location"] = url
+
+      puts "the url is #{url}"
+      p @res
+
       session.store_session(@res)
       @already_rendered = true
       return
@@ -55,9 +59,9 @@ class ControllerBase
     unless already_rendered?
       controller_name = self.class.to_s.tableize[0..-2]
       file_path = "views/#{controller_name}/#{template_name.to_s}.html.erb"
-
       template = ERB.new(File.read(file_path))
-      session.store_session(@res)
+      
+      # session.store_session(@res)
       render_content(template.result(binding), "text/html")
       return
     end

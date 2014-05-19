@@ -15,7 +15,6 @@ class Session
     else
       @cookie ||= {}
     end
-
   end
 
   def [](key)
