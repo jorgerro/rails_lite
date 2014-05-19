@@ -40,14 +40,11 @@ class ControllerBase
   def redirect_to(url)
     unless already_rendered?
       @res.status = 302
-      @res["location"] = url
-
-      puts "the url is #{url}"
-      p @res
+      @res.header["location"] = url
 
       session.store_session(@res)
       @already_rendered = true
-      return
+      return nil
     end
     raise "Double Render Error"
   end
@@ -60,7 +57,7 @@ class ControllerBase
       controller_name = self.class.to_s.tableize[0..-2]
       file_path = "views/#{controller_name}/#{template_name.to_s}.html.erb"
       template = ERB.new(File.read(file_path))
-      
+
       # session.store_session(@res)
       render_content(template.result(binding), "text/html")
       return

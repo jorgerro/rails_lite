@@ -67,6 +67,8 @@ describe Router do
       req.stub(:path) { "/users" }
       req.stub(:request_method) { :get }
       matched = subject.match(req)
+      p "************"
+      p matched
       matched.should_not be_nil
     end
 

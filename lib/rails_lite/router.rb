@@ -69,8 +69,9 @@ class Router
 
   def match(req)
     @routes.select do |route|
-      req.path =~ route.pattern && req.request_method == route.http_method.to_s.upcase
+      req.path =~ route.pattern && req.request_method.downcase.to_sym == route.http_method
     end.first
+    # routes.find { |route| route.matches?(req) }
   end
 
   # either throw 404 or call run on a matched route
