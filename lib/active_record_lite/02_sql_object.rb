@@ -1,10 +1,25 @@
 require_relative 'db_connection'
-require_relative '01_mass_object'
-require_relative '00_attr_accessor_object'
+# require_relative '01_mass_object'
+# require_relative '00_attr_accessor_object'
 require 'active_support/inflector'
 require "sqlite3"
 
-class MassObject < AttrAccessorObject
+# class MassObject < AttrAccessorObject
+#
+#   def self.parse_all(results)
+#
+#     new_objects = []
+#
+#     results.each do |hash|
+#       new_objects << self.new(hash)
+#     end
+#     new_objects
+#   end
+#
+# end
+
+class SQLObject #< MassObject
+
 
   def self.parse_all(results)
 
@@ -15,14 +30,6 @@ class MassObject < AttrAccessorObject
     end
     new_objects
   end
-
-end
-
-
-
-
-class SQLObject < MassObject
-
 
   def self.my_attr_accessor(*names)
 
@@ -82,6 +89,20 @@ class SQLObject < MassObject
     self.new(hash)
   end
 
+
+  def initialize(params = {})
+    cols = self.class.columns
+
+    params.each do |attr_name, value|
+      if !cols.include?(attr_name.to_sym)
+        raise "unknown attribute #{attr_name}" unless attr_name == "password"
+      else
+        self.send("#{attr_name}=".to_sym, value)
+      end
+    end
+
+  end
+
   def attributes
     @attributes ||= {}
   end
@@ -123,19 +144,6 @@ class SQLObject < MassObject
     else
       self.insert
     end
-  end
-
-  def initialize(params = {})
-    cols = self.class.columns
-
-    params.each do |attr_name, value|
-      if !cols.include?(attr_name.to_sym)
-        raise "unknown attribute #{attr_name}"
-      else
-        self.send("#{attr_name}=".to_sym, value)
-      end
-    end
-
   end
 
   def attribute_values

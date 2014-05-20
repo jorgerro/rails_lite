@@ -1,64 +1,147 @@
 require 'active_support/core_ext'
 require 'json'
 require 'webrick'
+require 'bcrypt'
 require_relative '../lib/rails_lite'
 
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/HTTPRequest.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/HTTPResponse.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/Cookie.html
+  #  MODELS
+
+class User < SQLObject
+
+  def User.find_by_credentials(email, secret)
+    @user = User.where( email: email ).first
+    p @user
+    return @user if @user && @user.is_password?(secret)
+    nil
+  end
+
+  def User.generate_session_token
+    SecureRandom::urlsafe_base64
+  end
+
+  def is_password?(secret)
+    bcrypt = BCrypt::Password.new(self.password_digest)
+    bcrypt.is_password?(secret)
+  end
+
+  def reset_session_token!
+    self.session_token = User.generate_session_token
+    self.save
+    self.session_token
+  end
+
+  private
+    def ensure_session_token
+      self.session_token ||= User.generate_session_token
+    end
+end
 
 
-server = WEBrick::HTTPServer.new :Port => 8080
-trap('INT') { server.shutdown }
+class Status < SQLObject
+end
 
-class StatusesController < ControllerBase
+
+  #  CONTROLLERS
+
+
+class SessionController < AppController
+
+  def create # sign in a user
+    @user = User.find_by_credentials(
+      params["user"]["email"],
+      params["user"]["password"]
+    )
+
+    if @user
+      sign_in(@user)
+      redirect_to "/"
+    else
+      render :new
+    end
+  end
+
+  def new
+    render :new
+  end
+
+  def destroy # sign out a user
+    sign_out
+    redirect_to "/"
+  end
+
+end
+
+
+class UsersController < AppController
+
+  def new
+    @user = User.new
+  end
+
+  def create
+
+    @user = User.new(params["user"])
+    @user.password_digest = BCrypt::Password.create(params['password'])
+    @user.session_token = User.generate_session_token
+    @user.save
+    redirect_to "users"
+  end
 
   def index
+    @users = User.all
+  end
+end
+
+class StatusesController < AppController
+
+  def index
+    p "in the index"
     @statuses = Status.all
-    p " the statuses::::: #{p Status.all}"
   end
 
   def new
   end
 
   def create
-    puts params
     @status = Status.new(params["status"])
-    p @status
     @status.save
     redirect_to "statuses"
   end
 
 
   def show
-    render_content("status ##{params['id']}", "text/text")
+    @status = Status.find(params['id'].to_i)
   end
-end
-
-class Status < SQLObject
 
 end
 
 
+  #  ROUTER
 
-
-class UsersController < ControllerBase
-  def index
-    @users = ["Jorge", "Daniel", "Sam"]
-  end
-end
 
 router = Router.new
 router.draw do
+  get Regexp.new("^/session/new$"), SessionController, :new
+  post Regexp.new("^/session$"), SessionController, :create
+  delete Regexp.new("^/statuses/(?<id>\\d+)$"), SessionController, :destroy
+
+
   get Regexp.new("^/statuses$"), StatusesController, :index
   get Regexp.new("^/statuses/new$"), StatusesController, :new
   post Regexp.new("^/statuses$"), StatusesController, :create
   get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
 
-  # uncomment this when you get to route params
   get Regexp.new("^/users$"), UsersController, :index
+  get Regexp.new("^/users/new$"), UsersController, :new
+  post Regexp.new("^/users$"), UsersController, :create
 end
+
+
+  #  SERVER
+
+
+server = WEBrick::HTTPServer.new :Port => 8080
+trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
   route = router.run(req, res)

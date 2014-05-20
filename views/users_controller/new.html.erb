@@ -1,0 +1,17 @@
+<form action="/users" method="post">
+
+  <label for="first_name">First Name</label>
+  <input type="text" name="user[fname]" value="<%= @user.fname %>" id="first_name">
+
+  <label for="last_name">Last Name</label>
+  <input type="text" name="user[lname]" value="<%= @user.lname %>" id="last_name">
+
+  <label for="email">Email</label>
+  <input type="text" name="user[email]" value="<%= @user.email %>" id="email">
+
+  <label for="password">Password</label>
+  <input type="password" name="password" value="" id="password">
+
+
+  <p><input type="submit" value="Create User"></p>
+</form>
