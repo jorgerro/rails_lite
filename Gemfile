@@ -6,3 +6,6 @@ gem "activesupport"
 gem "rake"
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'binding_of_caller'
+gem 'better_errors'
+

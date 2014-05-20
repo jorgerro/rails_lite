@@ -87,7 +87,7 @@ class AppController < ControllerBase
 
   def current_user
     return nil unless session["token"]
-    @current_user ||= User.find_by_session_token(session["token"])
+    @current_user ||= User.where(session_token: session["token"]).first
   end
 
   def sign_in(user)
@@ -96,6 +96,7 @@ class AppController < ControllerBase
   end
 
   def sign_out
+    # p current_user
     current_user.reset_session_token!
     session["token"] = nil
   end

@@ -43,6 +43,14 @@ end
 
   #  CONTROLLERS
 
+class PagesController < AppController
+
+  def home
+    p current_user
+    @current_user = current_user
+  end
+end
+
 
 class SessionController < AppController
 
@@ -121,9 +129,11 @@ end
 
 router = Router.new
 router.draw do
+  get Regexp.new("^/$"), PagesController, :home
+
   get Regexp.new("^/session/new$"), SessionController, :new
   post Regexp.new("^/session$"), SessionController, :create
-  delete Regexp.new("^/statuses/(?<id>\\d+)$"), SessionController, :destroy
+  post Regexp.new("^/session/destroy$"), SessionController, :destroy
 
 
   get Regexp.new("^/statuses$"), StatusesController, :index
