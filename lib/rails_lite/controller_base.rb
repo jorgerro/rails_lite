@@ -2,6 +2,9 @@ require 'erb'
 require 'active_support/inflector'
 require_relative 'params'
 require_relative 'session'
+require_relative '../active_record_lite/02_sql_object.rb'
+
+
 
 
 class ControllerBase

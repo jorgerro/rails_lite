@@ -12,33 +12,52 @@ require_relative '../lib/rails_lite'
 server = WEBrick::HTTPServer.new :Port => 8080
 trap('INT') { server.shutdown }
 
-class StatusController < ControllerBase
-  def index
-    statuses = ["s1", "s2", "s3"]
+class StatusesController < ControllerBase
 
-    render_content(statuses.to_json, "text/json")
+  def index
+    @statuses = Status.all
+    p " the statuses::::: #{p Status.all}"
   end
+
+  def new
+  end
+
+  def create
+    puts params
+    @status = Status.new(params["status"])
+    p @status
+    @status.save
+    redirect_to "statuses"
+  end
+
 
   def show
     render_content("status ##{params['id']}", "text/text")
   end
 end
 
-class UserController < ControllerBase
-  def index
-    users = ["u1", "u2", "u3"]
+class Status < SQLObject
 
-    render_content(users.to_json, "text/json")
+end
+
+
+
+
+class UsersController < ControllerBase
+  def index
+    @users = ["Jorge", "Daniel", "Sam"]
   end
 end
 
 router = Router.new
 router.draw do
-  get Regexp.new("^/statuses$"), StatusController, :index
-  get Regexp.new("^/users$"), UserController, :index
+  get Regexp.new("^/statuses$"), StatusesController, :index
+  get Regexp.new("^/statuses/new$"), StatusesController, :new
+  post Regexp.new("^/statuses$"), StatusesController, :create
+  get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
 
   # uncomment this when you get to route params
-  get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusController, :show
+  get Regexp.new("^/users$"), UsersController, :index
 end
 
 server.mount_proc '/' do |req, res|
