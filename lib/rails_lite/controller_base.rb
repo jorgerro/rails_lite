@@ -24,6 +24,7 @@ class ControllerBase
     unless already_rendered?
       @res.content_type = content_type
       @res.body = body
+
       session.store_session(@res)
       @already_built_response = true
       return
@@ -60,7 +61,7 @@ class ControllerBase
       file_path = "views/#{controller_name}/#{template_name.to_s}.html.erb"
       template = ERB.new(File.read(file_path))
 
-      # session.store_session(@res)
+      session.store_session(@res)
       render_content(template.result(binding), "text/html")
       return
     end

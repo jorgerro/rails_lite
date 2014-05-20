@@ -46,6 +46,7 @@ end
 class PagesController < AppController
 
   def home
+    p session
     p current_user
     @current_user = current_user
   end
@@ -73,6 +74,7 @@ class SessionController < AppController
   end
 
   def destroy # sign out a user
+    p session
     sign_out
     redirect_to "/"
   end
@@ -87,7 +89,6 @@ class UsersController < AppController
   end
 
   def create
-
     @user = User.new(params["user"])
     @user.password_digest = BCrypt::Password.create(params['password'])
     @user.session_token = User.generate_session_token
@@ -104,6 +105,7 @@ class StatusesController < AppController
 
   def index
     p "in the index"
+    p session
     @statuses = Status.all
   end
 
