@@ -1,3 +1,3 @@
 
-web: bundle exec ruby test/first_attempt.rb -p $PORT 
+web: bundle exec ruby test/web.rb -p $PORT
 
