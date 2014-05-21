@@ -10,7 +10,7 @@ class Session
     p "initializing session"
     cookie_dough = req.cookies.select do |cookie|
       cookie.name == '_rails_lite_app' #&& JSON.parse(cookie.value)['token'] != nil
-    end.first
+    end.last
 
     if cookie_dough
       @cookie = JSON.parse(cookie_dough.value)
@@ -36,7 +36,7 @@ class Session
     new_cookie = WEBrick::Cookie.new('_rails_lite_app', JSON.generate(@cookie))
     # new_cookie.expires = "2014-06-01"
     res.cookies << new_cookie
-    p "these are the response cookies being sent down"
+    p "these are the response cookies being sent down:"
     p res.cookies
   end
 end

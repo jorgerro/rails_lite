@@ -163,8 +163,10 @@ class AppController < ControllerBase
 
   def current_user
     p "in current user method"
+    p "session:"
+    p @session
     p session
-    return nil unless session["token"]
+    # return nil if User.where(session_token: session["token"]).empty?
     @current_user ||= User.where(session_token: session["token"]).first
   end
 
@@ -185,10 +187,6 @@ class AppController < ControllerBase
   def signed_in?
     !!current_user
   end
-
-  # def session
-  #   @session ||= Session.new(@req)
-  # end
 
   # def require_signed_in!
 #     redirect_to new_session_url unless signed_in?

@@ -3,6 +3,14 @@
 
 <h2>This is the home page.</h2>
 
-<form action="/session/destroy" method="post" >
-  <input id="signout-button" type="submit" value="Sign Out">
-</form>
+<% if @signed_in %>
+
+	<form action="/session/destroy" method="post" >
+	  <input id="signout-button" type="submit" value="Sign Out">
+	</form>
+
+<% end %>
+
+<a href="/statuses">See All the Statuses</a><br>
+<a href="/users">See All the Users</a><br>
+<a href="/session/new">Sign In</a><br>

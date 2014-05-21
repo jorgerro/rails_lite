@@ -48,6 +48,7 @@ class PagesController < AppController
   def home
     # p session
     # p current_user
+    @signed_in = signed_in?
     @current_user = current_user
   end
 end
@@ -79,6 +80,8 @@ class SessionController < AppController
   def destroy # sign out a user
     p "in the session#destroy"
     p @req
+    p "session:"
+    p @session
     p session
     sign_out
     redirect_to "/"
@@ -157,7 +160,7 @@ end
   #  SERVER
 
 
-server = WEBrick::HTTPServer.new :Port => 8080
+server = WEBrick::HTTPServer.new :Port => 3000
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
