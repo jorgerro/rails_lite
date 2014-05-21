@@ -10,7 +10,7 @@ class User < SQLObject
 
   def User.find_by_credentials(email, secret)
     @user = User.where( email: email ).first
-    p @user
+    # p @user
     return @user if @user && @user.is_password?(secret)
     nil
   end
@@ -46,8 +46,8 @@ end
 class PagesController < AppController
 
   def home
-    p session
-    p current_user
+    # p session
+    # p current_user
     @current_user = current_user
   end
 end
@@ -63,7 +63,10 @@ class SessionController < AppController
 
     if @user
       sign_in(@user)
+      p "the session token after signing in is: #{ session['token'] }"
+
       redirect_to "/"
+      return
     else
       render :new
     end
@@ -74,6 +77,8 @@ class SessionController < AppController
   end
 
   def destroy # sign out a user
+    p "in the session#destroy"
+    p @req
     p session
     sign_out
     redirect_to "/"

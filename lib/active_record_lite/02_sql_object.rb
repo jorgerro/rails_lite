@@ -1,6 +1,7 @@
 require_relative 'db_connection'
 # require_relative '01_mass_object'
 # require_relative '00_attr_accessor_object'
+require_relative '03_searchable'
 require 'active_support/inflector'
 require "sqlite3"
 
@@ -19,7 +20,7 @@ require "sqlite3"
 # end
 
 class SQLObject #< MassObject
-
+  extend Searchable
 
   def self.parse_all(results)
 
@@ -125,7 +126,7 @@ class SQLObject #< MassObject
     end
 
     configured_attributes = (attribute_values[1..-1] + [self.id]).map(&:to_s)
-    puts "#{configured_attributes} ***************************"
+    # puts "#{configured_attributes} ***************************"
 
     DBConnection.execute(<<-SQL, *configured_attributes)
     UPDATE

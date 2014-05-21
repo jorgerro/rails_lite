@@ -9,7 +9,7 @@ module Searchable
     end
     search_values = params.values.map(&:to_s)
 
-    puts "#{where_line} #{search_values}********************************** "
+    # puts "#{where_line} #{search_values}********************************** "
 
     query_return = DBConnection.execute(<<-SQL, *search_values)
     SELECT
@@ -26,7 +26,7 @@ module Searchable
   end
 end
 
-class SQLObject
-  # Mixin Searchable here...
-  extend Searchable
-end
+# class SQLObject
+#   # Mixin Searchable here...
+#   extend Searchable
+# end
