@@ -1,5 +1,28 @@
+
+-- sqlite3
+
+-- CREATE TABLE users (
+--   id INTEGER PRIMARY KEY,
+--   fname VARCHAR(255) NOT NULL,
+--   lname VARCHAR(255) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   password_digest VARCHAR(255) NOT NULL,
+--   session_token VARCHAR(255) NOT NULL
+-- );
+--
+-- CREATE TABLE statuses (
+--   id INTEGER PRIMARY KEY,
+--   body VARCHAR(255) NOT NULL,
+--   author_id INTEGER NOT NULL,
+--
+--   FOREIGN KEY(author_id) REFERENCES user(id)
+-- );
+
+
+-- postgresql
+
 CREATE TABLE users (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   fname VARCHAR(255) NOT NULL,
   lname VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
@@ -8,15 +31,26 @@ CREATE TABLE users (
 );
 
 CREATE TABLE statuses (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   body VARCHAR(255) NOT NULL,
-  author_id INTEGER NOT NULL,
-
-  FOREIGN KEY(author_id) REFERENCES user(id)
+  author_id INTEGER NOT NULL
 );
 
+INSERT INTO
+  statuses (body, author_id)
+VALUES
+  ('tweeting is great!', 1), ('this is a status!', 1), ('This is the third status!', 2), ('Status number four!', 3);
+
+INSERT INTO
+  users (fname, lname, email, password_digest, session_token)
+VALUES
+  ('Jorge', 'Rodriguez', 'jorger.rodriguez1@gmail.com', 'aaaaa', )
 
 
+
+
+
+-- sqlite3 examples
 
 -- CREATE TABLE cats (
 --   id INTEGER PRIMARY KEY,

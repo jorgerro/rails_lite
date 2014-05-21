@@ -1,4 +1,6 @@
 require 'sqlite3'
+require 'pg'
+
 
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 ROOT_FOLDER = File.join(File.dirname(__FILE__), "../..")
@@ -52,3 +54,49 @@ class DBConnection
   def initialize(db_file_name)
   end
 end
+
+
+# # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
+# ROOT_FOLDER = File.join(File.dirname(__FILE__), "../..")
+# RAILS_LITE_SQL_FILE = File.join(ROOT_FOLDER, "test.sql")
+# RAILS_LITE_DB_FILE = File.join(ROOT_FOLDER, "test.db")
+#
+# class DBConnection
+#   def self.open(db_file_name)
+#     @conn = PGconn.open(:dbname => 'testone')
+#
+#     @db = SQLite3::Database.new(db_file_name)
+#     @db.results_as_hash = true
+#     @db.type_translation = true
+#
+#     @db
+#   end
+#
+#   def self.instance
+#     # self.reset if @db.nil?
+#     # @db = SQLite3::Database.new(RAILS_LITE_DB_FILE)
+#     DBConnection.open(RAILS_LITE_DB_FILE)
+#
+#     @db
+#   end
+#
+#   def self.execute(*args)
+#     puts args[0]
+#
+#     self.instance.execute(*args)
+#   end
+#
+#   def self.execute2(*args)
+#     puts args[0]
+#
+#     self.instance.execute2(*args)
+#   end
+#
+#   def self.last_insert_row_id
+#     self.instance.last_insert_row_id
+#   end
+#
+#   private
+#   def initialize(db_file_name)
+#   end
+# end
