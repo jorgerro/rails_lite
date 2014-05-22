@@ -65,10 +65,12 @@ require 'pg'
 # ROOT_FOLDER = File.join(File.dirname(__FILE__), "../..")
 # RAILS_LITE_SQL_FILE = File.join(ROOT_FOLDER, "test.sql")
 # RAILS_LITE_DB_FILE = File.join(ROOT_FOLDER, "test.db")
+# "postgres://qbukwpcacfwthv:uNxjXnl_3PaACBejY1pJtGIJw8@ec2-54-83-199-115.compute-1.amazonaws.com:5432/d14b5da7qjkppm"
+
 
 class DBConnection
   def self.open#(db_file_name)
-    @conn ||= PGconn.open(:dbname => DATABASE_URL)
+    @conn ||= PGconn.open(:dbname => ENV['DATABASE_URL'])
 
     # @db.type_translation = true
 
