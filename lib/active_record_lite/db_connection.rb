@@ -71,10 +71,12 @@ require 'pg'
 
 class DBConnection
   def self.open#(db_file_name)
-    # @conn ||= PGconn.open(:dbname => THIRD_RAIL['LOCAL_DATABASE'])
+
+    # Development
+    # @conn ||= PGconn.open(:dbname => 'testone')
 
 
-    # database url supplied by heroku ENV['DATABASE_URL']
+    # Production
     @conn ||= PG::Connection.new(host: ENV['DB_HOST'], port: ENV['DB_PORT'], dbname: ENV['DB_NAME'],
     user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 

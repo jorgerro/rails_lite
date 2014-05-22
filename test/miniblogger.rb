@@ -3,8 +3,6 @@ require 'json'
 require 'webrick'
 require 'bcrypt'
 require_relative '../lib/rails_lite'
-require 'rack'
-# require_relative '../Procfile'
 
   #  MODELS
 
