@@ -1,4 +1,4 @@
-require 'sqlite3'
+# require 'sqlite3'
 require 'pg'
 
 # sqlite3 database connection
