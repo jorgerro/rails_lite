@@ -3,6 +3,7 @@ require 'json'
 require 'webrick'
 require 'bcrypt'
 require_relative '../lib/rails_lite'
+require_relative '../Procfile'
 
   #  MODELS
 
@@ -160,7 +161,7 @@ end
   #  SERVER
 
 
-server = WEBrick::HTTPServer.new :Port => $PORT
+server = WEBrick::HTTPServer.new :Port => 3000
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
