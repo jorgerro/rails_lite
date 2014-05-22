@@ -3,7 +3,7 @@ require 'json'
 require 'webrick'
 require 'bcrypt'
 require_relative '../lib/rails_lite'
-require_relative '../Procfile'
+# require_relative '../Procfile'
 
   #  MODELS
 
@@ -139,6 +139,7 @@ end
 
 
 router = Router.new
+
 router.draw do
   get Regexp.new("^/$"), PagesController, :home
 
@@ -165,11 +166,20 @@ server = WEBrick::HTTPServer.new :Port => 3000
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|
-  route = router.run(req, res)
+  router.run(req, res)
 end
 
 server.start
 
-# run Proc.new  mount_proc '/' do |req, res|
+# run Proc.new do |req, res|
 #   route = router.run(req, res)
-# # end
+# end
+#
+#
+# Rack::Handler::WEBrick.run -> (env) do
+#
+#
+#
+#
+#
+# end

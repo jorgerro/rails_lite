@@ -61,7 +61,6 @@ class ControllerBase
       file_path = "views/#{controller_name}/#{template_name.to_s}.html.erb"
       template = ERB.new(File.read(file_path))
 
-      session.store_session(@res)
       render_content(template.result(binding), "text/html")
       return
     end
