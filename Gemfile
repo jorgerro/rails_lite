@@ -12,5 +12,6 @@ gem 'binding_of_caller'
 gem 'better_errors'
 gem 'pg'
 gem 'rack'
+gem 'figaro'
 # gem 'sqlite3'
 

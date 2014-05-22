@@ -1,6 +1,6 @@
 # require 'sqlite3'
 require 'pg'
-require_relative '../../secret.rb'
+# require_relative '../../secret.rb'
 
 # sqlite3 database connection
 
@@ -75,8 +75,8 @@ class DBConnection
 
 
     # database url supplied by heroku ENV['DATABASE_URL']
-    @conn ||= PG::Connection.new(host: THIRD_RAIL['HOST'], port: THIRD_RAIL['PORT'], dbname: THIRD_RAIL['DB_NAME'],
-    user: THIRD_RAIL['USER'], password: THIRD_RAIL['DB_PASSWORD'])
+    @conn ||= PG::Connection.new(host: ENV['DB_HOST'], port: ENV['DB_PORT'], dbname: ENV['DB_NAME'],
+    user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
 
     # @db.type_translation = true
