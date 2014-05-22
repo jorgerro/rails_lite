@@ -3,7 +3,7 @@ require_relative 'db_connection'
 # require_relative '00_attr_accessor_object'
 require_relative '03_searchable'
 require 'active_support/inflector'
-require "sqlite3"
+# require "sqlite3"
 
 # class MassObject < AttrAccessorObject
 #
