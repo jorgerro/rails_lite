@@ -160,15 +160,15 @@ end
   #  SERVER
 
 
-# server = WEBrick::HTTPServer.new :Port => 3000
-# trap('INT') { server.shutdown }
-#
-# server.mount_proc '/' do |req, res|
-#   route = router.run(req, res)
-# end
-#
-# server.start
+server = WEBrick::HTTPServer.new :Port => 3000
+trap('INT') { server.shutdown }
 
-get '/' do |req, res|
+server.mount_proc '/' do |req, res|
   route = router.run(req, res)
 end
+
+server.start
+
+# run Proc.new  mount_proc '/' do |req, res|
+#   route = router.run(req, res)
+# # end

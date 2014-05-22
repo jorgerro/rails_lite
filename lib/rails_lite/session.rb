@@ -41,6 +41,7 @@ class Session
   end
 end
 
+### Solution
 # class Session
 #   def initialize(req)
 #     cookie = req.cookies.find { |c| c.name == "_rails_lite_app" }

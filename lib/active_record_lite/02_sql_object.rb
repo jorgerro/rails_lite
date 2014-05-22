@@ -126,7 +126,10 @@ class SQLObject #< MassObject
     VALUES
       (#{question_marks})
     SQL
-    self.id = DBConnection.last_insert_row_id
+
+
+    # TODO: May want to reinstate this functionality (so that the model object immediately has an ID)
+    # self.id = DBConnection.last_insert_row_id
   end
 
   def update
@@ -135,6 +138,8 @@ class SQLObject #< MassObject
     #   "#{col_name} = ?"
     # end
     # configured_attributes = (attribute_values[1..-1] + [self.id]).map(&:to_s)
+
+
     id_set = ""
     cols = col_names[1..-1]
     set_array = []

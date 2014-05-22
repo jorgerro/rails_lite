@@ -76,8 +76,6 @@ class DBConnection
   end
 
   def self.instance
-    # self.reset if @db.nil?
-    # @db = SQLite3::Database.new(RAILS_LITE_DB_FILE)
     DBConnection.open#(RAILS_LITE_DB_FILE)
 
     @conn
