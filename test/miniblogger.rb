@@ -163,18 +163,18 @@ end
   #  SERVER
 
 
-server = WEBrick::HTTPServer.new :Port => 3000
-trap('INT') { server.shutdown }
-
-server.mount_proc '/' do |req, res|
-  router.run(req, res)
-end
-
-server.start
-
-# run Proc.new do |req, res|
-#   route = router.run(req, res)
+# server = WEBrick::HTTPServer.new :Port => 3000
+# trap('INT') { server.shutdown }
+#
+# server.mount_proc '/' do |req, res|
+#   router.run(req, res)
 # end
+#
+# server.start
+#
+# # run Proc.new do |req, res|
+# #   route = router.run(req, res)
+# # end
 
 
 # Rack::Handler::WEBrick.run -> (env) do
@@ -185,3 +185,10 @@ server.start
 #
 #
 # end
+
+
+Rack::Handler::WEBrick.run -> (env) do
+  mount_proc '/' do |req, res|
+    router.run(req, res)
+  end
+end

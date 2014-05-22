@@ -1,5 +1,7 @@
 require 'uri'
 
+class AttributeNotFoundError < ArgumentError
+end
 
 class Params
   # initialize merges params from query string, post body, and route params
@@ -33,9 +35,8 @@ class Params
 
   def to_s
     JSON.generate(@params)
+  end
 
-
-  class AttributeNotFoundError < ArgumentError; end;
 
   # private
 
