@@ -50,9 +50,11 @@ class SQLObject #< MassObject
 
 
   def self.columns
-    # db = SQLite3::Database.new "#{table_name}.db"
-    # db.results_as_hash = true
-    cols = DBConnection.execute2("SELECT * FROM #{table_name}")[0].map(&:to_sym)
+    # sqlite3
+    # cols = DBConnection.execute2("SELECT * FROM #{table_name}")[0].map(&:to_sym)
+
+    # postgres
+    cols = DBConnection.get_columns("SELECT * FROM #{table_name}").map(&:to_sym)
     cols.each do |col|
       my_attr_accessor(col)
     end
@@ -84,7 +86,7 @@ class SQLObject #< MassObject
     array = DBConnection.execute(<<-SQL, id)
     SELECT *
     FROM #{table_name}
-    WHERE #{table_name}.id = ?
+    WHERE #{table_name}.id = $1
     SQL
     hash = array.first
     self.new(hash)
@@ -109,7 +111,15 @@ class SQLObject #< MassObject
   end
 
   def insert
-    question_marks = (["?"] * col_names.length).join(", ")
+    ### sqlite 3
+    # question_marks = (["?"] * col_names.length).join(", ")
+
+    vars = []
+    col_names.length.times do |idx|
+      vars << "$#{(idx + 1).to_s}"
+    end
+    question_marks = vars.join(", ")
+
     DBConnection.execute(<<-SQL, *(attribute_values))
     INSERT INTO
       #{self.class.table_name} (#{col_names.join(', ')})
@@ -120,21 +130,32 @@ class SQLObject #< MassObject
   end
 
   def update
-    question_marks = (["?"] * col_names.length).join(", ")
-    set_string = col_names[1..-1].map do |col_name|
-      "#{col_name} = ?"
+    ### sqlite3
+    # set_string = col_names[1..-1].map do |col_name|
+    #   "#{col_name} = ?"
+    # end
+    # configured_attributes = (attribute_values[1..-1] + [self.id]).map(&:to_s)
+    id_set = ""
+    cols = col_names[1..-1]
+    set_array = []
+    cols.each_with_index do |col, idx|
+      set_array << "#{col} = $#{ (idx + 1).to_s }"
+      if idx == cols.length - 1
+        id_set = "id = $#{ (idx + 2).to_s }"
+      end
     end
 
-    configured_attributes = (attribute_values[1..-1] + [self.id]).map(&:to_s)
+    configured_attributes = (attribute_values[1..-1] + [self.id])
+
     # puts "#{configured_attributes} ***************************"
 
     DBConnection.execute(<<-SQL, *configured_attributes)
     UPDATE
       #{self.class.table_name}
     SET
-      #{set_string.join(', ')}
+      #{set_array.join(', ')}
     WHERE
-      id = ?
+      #{id_set}
     SQL
 
   end

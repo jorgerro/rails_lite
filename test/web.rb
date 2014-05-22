@@ -160,7 +160,7 @@ end
   #  SERVER
 
 
-server = WEBrick::HTTPServer.new :Port => $PORT
+server = WEBrick::HTTPServer.new :Port => 3000
 trap('INT') { server.shutdown }
 
 server.mount_proc '/' do |req, res|

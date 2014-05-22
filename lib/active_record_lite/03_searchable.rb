@@ -4,9 +4,16 @@ require_relative '02_sql_object'
 module Searchable
   # params = {name: "Haskell", color: "calico"}
   def where(params)
-    where_line = params.keys.map(&:to_s).map do |key|
-      "#{key} = ?"
+    ### sqlite3
+    # where_line = params.keys.map(&:to_s).map do |key|
+    #   "#{key} = ?"
+    # end
+
+    where_line = []
+    params.keys.each_with_index do |key, idx|
+      where_line << "#{key.to_s} = $#{(idx + 1).to_s}"
     end
+
     search_values = params.values.map(&:to_s)
 
     # puts "#{where_line} #{search_values}********************************** "
