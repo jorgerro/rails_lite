@@ -3,6 +3,7 @@ require 'json'
 require 'webrick'
 require 'bcrypt'
 require_relative '../lib/rails_lite'
+require 'rack'
 # require_relative '../Procfile'
 
   #  MODELS
@@ -174,12 +175,13 @@ server.start
 # run Proc.new do |req, res|
 #   route = router.run(req, res)
 # end
-#
-#
+
+
 # Rack::Handler::WEBrick.run -> (env) do
 #
+#   req = Rack::Request.new(env)
 #
-#
+#   [200, {"Content-type" => "text/html"}, [ "#{ req.inspect }"]]
 #
 #
 # end

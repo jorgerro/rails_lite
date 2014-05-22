@@ -33,7 +33,7 @@ class Params
 
   def to_s
     JSON.generate(@params)
-  end
+
 
   class AttributeNotFoundError < ArgumentError; end;
 
