@@ -68,7 +68,7 @@ require 'pg'
 
 class DBConnection
   def self.open#(db_file_name)
-    @conn ||= PGconn.open(:dbname => 'testone')
+    @conn ||= PGconn.open(:dbname => DATABASE_URL)
 
     # @db.type_translation = true
 
