@@ -41,10 +41,10 @@ INSERT INTO
 VALUES
   ('tweeting is great!', 1), ('this is a status!', 1), ('This is the third status!', 2), ('Status number four!', 3);
 
-INSERT INTO
-  users (fname, lname, email, password_digest, session_token)
-VALUES
-  ('Jorge', 'Rodriguez', 'jorger.rodriguez1@gmail.com', 'aaaaa', )
+-- INSERT INTO
+--   users (fname, lname, email, password_digest, session_token)
+-- VALUES
+--   ('Jorge', 'Rodriguez', 'jorger.rodriguez1@gmail.com', 'aaaaa', )
 
 
 

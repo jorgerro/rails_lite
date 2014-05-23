@@ -1,6 +1,5 @@
 # require 'sqlite3'
 require 'pg'
-# require_relative '../../secret.rb'
 
 # sqlite3 database connection
 
@@ -61,18 +60,10 @@ require 'pg'
 
 # Postgres database connection
 
-
-# https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
-# ROOT_FOLDER = File.join(File.dirname(__FILE__), "../..")
-# RAILS_LITE_SQL_FILE = File.join(ROOT_FOLDER, "test.sql")
-# RAILS_LITE_DB_FILE = File.join(ROOT_FOLDER, "test.db")
-# "postgres://qbukwpcacfwthv:uNxjXnl_3PaACBejY1pJtGIJw8@ec2-54-83-199-115.compute-1.amazonaws.com:5432/d14b5da7qjkppm"
-
-
 class DBConnection
   def self.open#(db_file_name)
 
-    # Development
+    # Development Database
     # @conn ||= PGconn.open(:dbname => 'testone')
 
 
@@ -80,14 +71,14 @@ class DBConnection
     @conn ||= PG::Connection.new(host: ENV['DB_HOST'], port: ENV['DB_PORT'], dbname: ENV['DB_NAME'],
     user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
-
+    # The ruby pg gem does not support type translation
     # @db.type_translation = true
 
     @conn
   end
 
   def self.instance
-    DBConnection.open#(RAILS_LITE_DB_FILE)
+    DBConnection.open
 
     @conn
   end
@@ -109,7 +100,6 @@ class DBConnection
 
   def self.get_columns(*args)
     puts args[0]
-
     self.instance.exec(*args).fields
   end
 
