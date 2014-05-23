@@ -59,6 +59,10 @@
 
   /* For Home Page */
 
+  div.jumbotron {
+    border-radius: 4px;
+  }
+
   p.details {
     font-size: 16px;
   }
@@ -117,9 +121,11 @@
 <section class="primary">
 
 
-  <h1>Welcome to MiniBlogger!</h1>
-
-  <p class="lead">MiniBlogger is a lightweight blogging platform built on an even lighter framework, Third Rail.</p>
+  <div class="jumbotron">
+    <h1>Welcome to MiniBlogger!</h1>
+    <p>MiniBlogger is a lightweight blogging platform built on an even lighter framework, Third Rail.</p>
+    <p><a class="btn btn-primary btn-lg" href="https://github.com/jorgerro/rails_lite">See The Source</a></p>
+  </div>
 
   <h2>The Details</h2>
   <p class="details">MiniBlogger and Third Rail were built by <a href="http://www.jorgerafaelrodriguez.com">Jorge Rodriguez</a>. Third Rail is a lightweight web framework written in Ruby and modeled after Ruby on Rails. It uses a WEBRick server to handle requests and construct responses. Third Rail features custom handling of request parameters and session variables.</p>

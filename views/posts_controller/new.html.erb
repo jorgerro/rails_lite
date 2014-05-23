@@ -59,6 +59,9 @@
 
   /* For New Post Page */
 
+  fieldset.new-form {
+    width: 775px;
+  }
 
 
 
@@ -117,8 +120,8 @@
   <div class="well bs-component">
   <form class="form-horizontal" action="/posts" method="POST">
     <input type="hidden" name="post[author_id]" value="<%= @current_user.id %>">
-    <fieldset>
-      <legend>New Post</legend>
+    <fieldset class="new-form">
+      <legend><i class="fa fa-pencil-square-o"></i> New Post</legend>
       <div class="form-group">
         <label for="post_title" class="col-lg-2 control-label">Title</label>
         <div class="col-lg-10">
@@ -132,8 +135,6 @@
           <span class="help-block">What's on your mind?</span>
         </div>
       </div>
-
-
       <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
           <!-- <button class="btn btn-default">Cancel</button> -->

@@ -1,3 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miniblogger</title>
+
+    <!-- Bootstrap -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
+    <link href="http://bootswatch.com/amelia/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+
+  /* Global */
+
+  section.primary {
+    width: 950px;
+    margin: 0 auto;
+  }
+
+  div.header-wrap {
+    margin: 0 auto;
+    width: 980px;
+  }
+
+  #signout-button {
+    margin-top: 7px;
+    margin-right: 10px;
+  }
+
+  #signout-button:hover {
+    background-color: #d92432;
+    border: 1px solid #d92432;
+  }
+
+  /* For Page */
+
+
+
+</style>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default">
+  <div class="header-wrap">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><i class="fa fa-book"></i> MiniBlogger</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Explore <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/posts">All Posts</a></li>
+            <li><a href="/users">Friends</a></li>
+          </ul>
+        </li>
+        <!-- <li><a href="#">Link</a></li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if @signed_in %>
+
+          <li><a href="#"><%= @current_user.fname %></a></li>
+          <li>
+          	<form action="/session/destroy" method="post">
+          	  <button id="signout-button" class="btn btn-primary" type="submit">Sign Out</button>
+          	</form>
+          </li>
+
+        <% else %>
+
+          <li><a href="/users/new">Sign Up</a></li>
+          <li><a href="/session/new">Sign In</a></li>
+
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<section class="primary">
+
+
 <h1>Posts</h1>
 index<br>
 
@@ -12,3 +128,8 @@ index<br>
 
 <br>
 <a href="/">Home</a>
+
+
+</section>
+</body>
+</html>
