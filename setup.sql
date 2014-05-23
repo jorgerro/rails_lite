@@ -30,9 +30,10 @@ CREATE TABLE users (
   session_token VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE statuses (
+CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
-  body VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
   author_id INTEGER NOT NULL
 );
 

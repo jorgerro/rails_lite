@@ -37,7 +37,7 @@ class User < SQLObject
 end
 
 
-class Status < SQLObject
+class Post < SQLObject
 end
 
 
@@ -46,8 +46,6 @@ end
 class PagesController < AppController
 
   def home
-    # p session
-    # p current_user
     @signed_in = signed_in?
     @current_user = current_user
   end
@@ -92,6 +90,10 @@ end
 
 class UsersController < AppController
 
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
   end
@@ -104,31 +106,37 @@ class UsersController < AppController
     redirect_to "users"
   end
 
-  def index
-    @users = User.all
+  def show
+    @signed_in = signed_in?
+    @current_user = current_user
+    @user = User.find(params['id'].to_i)
+    @posts = Post.where(author_id: @user.id)
   end
+
 end
 
-class StatusesController < AppController
+class PostsController < AppController
 
   def index
     p "in the index"
     p session
-    @statuses = Status.all
+    @posts = Post.all
   end
 
   def new
+    @signed_in = signed_in?
+    @current_user = current_user
   end
 
   def create
-    @status = Status.new(params["status"])
-    @status.save
-    redirect_to "statuses"
+    @post = Post.new(params["post"])
+    @post.save
+    redirect_to "posts"
   end
 
 
   def show
-    @status = Status.find(params['id'].to_i)
+    @post = Post.find(params['id'].to_i)
   end
 
 end
@@ -147,14 +155,15 @@ router.draw do
   post Regexp.new("^/session/destroy$"), SessionController, :destroy
 
 
-  get Regexp.new("^/statuses$"), StatusesController, :index
-  get Regexp.new("^/statuses/new$"), StatusesController, :new
-  post Regexp.new("^/statuses$"), StatusesController, :create
-  get Regexp.new("^/statuses/(?<id>\\d+)$"), StatusesController, :show
+  get Regexp.new("^/posts$"), PostsController, :index
+  get Regexp.new("^/posts/new$"), PostsController, :new
+  post Regexp.new("^/posts$"), PostsController, :create
+  get Regexp.new("^/posts/(?<id>\\d+)$"), PostsController, :show
 
   get Regexp.new("^/users$"), UsersController, :index
   get Regexp.new("^/users/new$"), UsersController, :new
   post Regexp.new("^/users$"), UsersController, :create
+  post Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :show
 end
 
 

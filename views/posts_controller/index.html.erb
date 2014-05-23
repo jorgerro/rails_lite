@@ -1,0 +1,14 @@
+<h1>Posts</h1>
+index<br>
+
+<% @posts.each do |post| %>
+
+  <%= post.body %><br>
+
+<% end %>
+
+<br>
+<a href="/posts/new">New Post</a>
+
+<br>
+<a href="/">Home</a>

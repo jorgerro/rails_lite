@@ -57,11 +57,9 @@
     border: 1px solid #d92432;
   }
 
-  /* For Home Page */
+  /* For New Post Page */
 
-  p.details {
-    font-size: 16px;
-  }
+
 
 
 </style>
@@ -113,23 +111,38 @@
 </div>
 
 
-
 <section class="primary">
 
 
-  <h1>Welcome to MiniBlogger!</h1>
+  <div class="well bs-component">
+  <form class="form-horizontal" action="/posts" method="POST">
+    <input type="hidden" name="post[author_id]" value="<%= @current_user.id %>">
+    <fieldset>
+      <legend>New Post</legend>
+      <div class="form-group">
+        <label for="post_title" class="col-lg-2 control-label">Title</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" name="post[title]" id="post_title" placeholder="Title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="textArea" class="col-lg-2 control-label">Text</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" rows="10" id="textArea" name="post[body]"></textarea>
+          <span class="help-block">What's on your mind?</span>
+        </div>
+      </div>
 
-  <p class="lead">MiniBlogger is a lightweight blogging platform built on an even lighter framework, Third Rail.</p>
 
-  <h2>The Details</h2>
-  <p class="details">MiniBlogger and Third Rail were built by <a href="http://www.jorgerafaelrodriguez.com">Jorge Rodriguez</a>. Third Rail is a lightweight web framework written in Ruby and modeled after Ruby on Rails. It uses a WEBRick server to handle requests and construct responses. Third Rail features custom handling of request parameters and session variables.</p>
-
-  <h3>Praise for Miniblogger</h3>
-  <blockquote>
-    <p>This is the blog site that's going to change it all!</p>
-    <small>Mark Zuckerberg<cite title="Source Title"> (Nerd)</cite></small>
-  </blockquote>
-
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <!-- <button class="btn btn-default">Cancel</button> -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  </div>
 
 
 </section>
