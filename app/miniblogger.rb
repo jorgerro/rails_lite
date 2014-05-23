@@ -91,10 +91,14 @@ end
 class UsersController < AppController
 
   def index
+    @signed_in = signed_in?
+    @current_user = current_user
     @users = User.all
   end
 
   def new
+    @signed_in = signed_in?
+    @current_user = current_user
     @user = User.new
   end
 
@@ -103,6 +107,7 @@ class UsersController < AppController
     @user.password_digest = BCrypt::Password.create(params['password'])
     @user.session_token = User.generate_session_token
     @user.save
+    sign_in(@user)
     redirect_to "users"
   end
 
@@ -110,7 +115,7 @@ class UsersController < AppController
     @signed_in = signed_in?
     @current_user = current_user
     @user = User.find(params['id'].to_i)
-    @posts = Post.where(author_id: @user.id)
+    @posts = Post.where(author_id: @user.id).reverse
   end
 
 end
@@ -118,6 +123,8 @@ end
 class PostsController < AppController
 
   def index
+    @signed_in = signed_in?
+    @current_user = current_user
     p "in the index"
     p session
     @posts = Post.all
@@ -136,6 +143,8 @@ class PostsController < AppController
 
 
   def show
+    @signed_in = signed_in?
+    @current_user = current_user
     @post = Post.find(params['id'].to_i)
   end
 
@@ -163,7 +172,7 @@ router.draw do
   get Regexp.new("^/users$"), UsersController, :index
   get Regexp.new("^/users/new$"), UsersController, :new
   post Regexp.new("^/users$"), UsersController, :create
-  post Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :show
+  get Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :show
 end
 
 

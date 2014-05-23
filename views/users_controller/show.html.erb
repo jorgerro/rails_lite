@@ -57,10 +57,10 @@
     border: 1px solid #d92432;
   }
 
-  /* For New Post Page */
+  /* For Page */
 
-  fieldset.new-form {
-    width: 775px;
+  p.post-body {
+    font-size: 16px;
   }
 
 
@@ -115,36 +115,31 @@
 </div>
 
 
+
 <section class="primary">
 
 
+<h1><%= @user.fname %>'s Posts</h1>
+
+<% if @signed_in %>
+
+  <a href="/posts/new">New Post</a>
+
+<% else %>
+
+  <a href="/session/new">Sign In to Write a New Post</a>
+
+<% end %>
+
+
+<% @posts.each do |post| %>
+
   <div class="well bs-component">
-  <form class="form-horizontal" action="/posts" method="POST">
-    <input type="hidden" name="post[author_id]" value="<%= @current_user.id %>">
-    <fieldset class="new-form">
-      <legend><i class="fa fa-pencil-square-o"></i> New Post</legend>
-      <div class="form-group">
-        <label for="post_title" class="col-lg-2 control-label">Title</label>
-        <div class="col-lg-10">
-          <input type="text" class="form-control" name="post[title]" id="post_title" placeholder="Title">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="textArea" class="col-lg-2 control-label">Text</label>
-        <div class="col-lg-10">
-          <textarea class="form-control" rows="10" id="textArea" name="post[body]"></textarea>
-          <span class="help-block">What's on your mind?</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
-          <!-- <button class="btn btn-default">Cancel</button> -->
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-    </fieldset>
-  </form>
+    <h2><%= post.title %></h2>
+    <p class="post-body"><%= post.body %></p>
   </div>
+
+<% end %>
 
 
 </section>
