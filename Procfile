@@ -1,4 +1,4 @@
 
-web: bundle exec ruby test/miniblogger.rb -p $PORT
+web: bundle exec ruby app/miniblogger.rb -p $PORT
 
 

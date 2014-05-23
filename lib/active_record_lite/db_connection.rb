@@ -63,7 +63,7 @@ require 'pg'
 class DBConnection
   def self.open#(db_file_name)
 
-    # Development Database
+    # Test Database
     # @conn ||= PGconn.open(:dbname => 'testone')
 
 

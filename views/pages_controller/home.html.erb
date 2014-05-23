@@ -1,18 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miniblogger</title>
 
-<h1>Welcome <%= @current_user ? @current_user.fname : "" %>!</h1>
+    <!-- Bootstrap -->
 
-<h2>This is the home page.</h2>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-<% if @signed_in %>
+    <!-- Optional theme
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
+    <link href="http://bootswatch.com/amelia/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-	<form action="/session/destroy" method="post" >
-	  <input id="signout-button" type="submit" value="Sign Out">
-	</form>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-<% end %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
 
-<a href="/statuses">See All the Statuses</a><br>
-<a href="/users">See All the Users</a><br>
-<a href="/session/new">Sign In</a><br>
-<a href="/users/new">Sign Up</a><br>
+    <!-- Font Awesome -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<style>
+
+  div.primary {
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+
+</style>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><i class="fa fa-book"></i> MiniBlogger</a>
+  </div>
+  <div class="navbar-collapse collapse navbar-responsive-collapse">
+    <ul class="nav navbar-nav">
+      <li ><a href="#">Active</a></li>
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header">Dropdown header</li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <form class="navbar-form navbar-left">
+      <input type="text" class="form-control col-lg-8" placeholder="Search">
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="primary">
+
+  <h1><%= @current_user ? "Welcome #{ @current_user.fname }!" : "Welcome!" %></h1>
+
+  <p class="lead">This is the home page.</p>
+
+  <% if @signed_in %>
+
+  	<form action="/session/destroy" method="post">
+  	  <input id="signout-button" type="submit" value="Sign Out">
+  	</form>
+
+  <% end %>
+
+  <a href="/statuses">See All the Statuses</a><br>
+  <a href="/users">See All the Users</a><br>
+  <a href="/session/new">Sign In</a><br>
+  <a href="/users/new">Sign Up</a><br>
+
+</div>
+
+
+
+</body>
+</html>
