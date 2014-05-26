@@ -88,7 +88,7 @@ class DBConnection
 
     results = []
     p args
-    p self.instance.exec("SELECT * FROM statuses WHERE id = $1", ["1"])[0]
+    # p self.instance.exec("SELECT * FROM statuses WHERE id = $1", ["1"])[0]
     res = self.instance.exec(args[0], args[1..-1])
     res.each do |result|
       results << result
