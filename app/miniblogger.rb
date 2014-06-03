@@ -145,16 +145,14 @@ class UsersController < AppController
     p @user 
     # p params['user']
 
-    # update the user model's attributes
+    # update the user model's attributes and saves the model
     @user.update_attributes(params['user'])
     p "new user"
     p @user
 
-    p "trying to save"
-    @user.save
-
-
-    redirect_to "users/#{ @user.id }"
+    # TODO: There is a bug here where it thinks the base url is the user show page,
+    # i.e. /users/5 
+    redirect_to ""
   end
 
 end

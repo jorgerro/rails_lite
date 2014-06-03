@@ -117,6 +117,8 @@ class SQLObject #< MassObject
       end
     end
 
+    self.save
+
   end
 
   def attributes
