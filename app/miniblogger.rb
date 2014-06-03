@@ -106,8 +106,13 @@ class UsersController < AppController
     @user = User.new(params["user"])
     @user.password_digest = BCrypt::Password.create(params['password'])
     @user.session_token = User.generate_session_token
+
+    # sign in user:
+    session["token"] = @user.session_token
+
+    # save user
     @user.save
-    sign_in(@user)
+    
     redirect_to "users"
   end
 
@@ -116,6 +121,40 @@ class UsersController < AppController
     @current_user = current_user
     @user = User.find(params['id'].to_i)
     @posts = Post.where(author_id: @user.id).reverse
+  end
+
+  def edit
+    @signed_in = signed_in?
+    @current_user = current_user
+    @user = User.find(params['id'].to_i)
+
+    # redirect if this page does not belong to the current user
+    # unless @user == @current_user
+    #   redirect_to "users"
+    #   return
+    # end
+
+  end
+
+  def update
+    p "In the update method"
+    # @signed_in = signed_in?
+    # @current_user = current_user
+    @user = User.find(params['id'].to_i)
+    p "User before update"
+    p @user 
+    # p params['user']
+
+    # update the user model's attributes
+    @user.update_attributes(params['user'])
+    p "new user"
+    p @user
+
+    p "trying to save"
+    @user.save
+
+
+    redirect_to "users/#{ @user.id }"
   end
 
 end
@@ -173,6 +212,8 @@ router.draw do
   get Regexp.new("^/users/new$"), UsersController, :new
   post Regexp.new("^/users$"), UsersController, :create
   get Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :show
+  get Regexp.new("^/users/(?<id>\\d+)/edit$"), UsersController, :edit
+  post Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :update
 end
 
 

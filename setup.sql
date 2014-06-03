@@ -37,15 +37,7 @@ CREATE TABLE posts (
   author_id INTEGER NOT NULL
 );
 
-INSERT INTO
-  statuses (body, author_id)
-VALUES
-  ('tweeting is great!', 1), ('this is a status!', 1), ('This is the third status!', 2), ('Status number four!', 3);
-
--- INSERT INTO
---   users (fname, lname, email, password_digest, session_token)
--- VALUES
---   ('Jorge', 'Rodriguez', 'jorger.rodriguez1@gmail.com', 'aaaaa', )
+ALTER TABLE users ADD COLUMN photo_url VARCHAR(255);
 
 
 

@@ -106,6 +106,19 @@ class SQLObject #< MassObject
 
   end
 
+  def update_attributes(params = {})
+    cols = self.class.columns
+
+    params.each do |attr_name, value|
+      if !cols.include?(attr_name.to_sym)
+        raise "unknown attribute #{attr_name}" unless attr_name == "password"
+      else
+        self.send("#{attr_name}=".to_sym, value)
+      end
+    end
+
+  end
+
   def attributes
     @attributes ||= {}
   end
@@ -152,7 +165,7 @@ class SQLObject #< MassObject
 
     configured_attributes = (attribute_values[1..-1] + [self.id])
 
-    # puts "#{configured_attributes} ***************************"
+    # puts "configured attributes: #{configured_attributes} ***************************"
 
     DBConnection.execute(<<-SQL, *configured_attributes)
     UPDATE

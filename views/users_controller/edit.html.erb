@@ -32,7 +32,6 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 <style>
 
   /* Global */
@@ -59,10 +58,13 @@
 
   /* For Page */
 
-  p.post-body {
-    font-size: 16px;
+  div.well {
+    max-width: 660px;
   }
 
+  fieldset.sign-in {
+    width: 550px;
+  }
 
 
 </style>
@@ -118,29 +120,49 @@
 
 <section class="primary">
 
-
-<h1><%= @user.fname %>'s Posts</h1>
-
-<% if @signed_in %>
-
-  <a href="/posts/new">New Post</a><br>
-  <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br>
-
-<% else %>
-
-  <a href="/session/new">Sign In to Write a New Post</a>
-
-<% end %>
-
-
-<% @posts.each do |post| %>
-
   <div class="well bs-component">
-    <h2><%= post.title %></h2>
-    <p class="post-body"><%= post.body %></p>
-  </div>
+  <form class="form-horizontal" action="<%= "/users/#{ @user.id }" %>" method="post">
+    <fieldset class="sign-in">
+      <legend>Edit Profile</legend>
 
-<% end %>
+      <div class="form-group">
+        <label for="user_fname" class="col-lg-2 control-label">First Name</label>
+        <div class="col-lg-10">
+          <input type="text" name="user[fname]" class="form-control" id="user_fname" placeholder="First" value="<%= @user.fname %>">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="user_lname" class="col-lg-2 control-label">Last Name</label>
+        <div class="col-lg-10">
+          <input type="text" name="user[lname]" class="form-control" id="user_lname" placeholder="Last" value="<%= @user.lname %>">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPhotoUrl" class="col-lg-2 control-label">Photo URL (Optional)</label>
+        <div class="col-lg-10">
+          <input type="text" name="user[photo_url]" class="form-control" id="inputPhotoUrl" placeholder="Photo URL" value="<%= @user.photo_url %>">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+        <div class="col-lg-10">
+          <input type="text" name="user[email]" class="form-control" id="inputEmail" placeholder="Email" value="<%= @user.email %>">
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="submit" class="btn btn-primary">Update Profile Information</button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+  </div>
 
 
 </section>

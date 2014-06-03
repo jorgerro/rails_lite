@@ -64,12 +64,12 @@ class DBConnection
   def self.open#(db_file_name)
 
     # Test Database
-    # @conn ||= PGconn.open(:dbname => 'testone')
+    @conn ||= PGconn.open(:dbname => 'testone')
 
 
     # Production
-    @conn ||= PG::Connection.new(host: ENV['DB_HOST'], port: ENV['DB_PORT'], dbname: ENV['DB_NAME'],
-    user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
+    # @conn ||= PG::Connection.new(host: ENV['DB_HOST'], port: ENV['DB_PORT'], dbname: ENV['DB_NAME'],
+    # user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
     # The ruby pg gem does not support type translation
     # @db.type_translation = true
