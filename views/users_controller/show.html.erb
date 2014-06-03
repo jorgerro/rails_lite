@@ -63,6 +63,15 @@
     font-size: 16px;
   }
 
+  /* Style profile iamge */
+
+  img.profile-img {
+    /* maybe make 100x100 circular?*/
+    height: auto;
+    width: 100px;
+    border-radius: 100%;
+  }
+
 
 
 </style>
@@ -118,6 +127,8 @@
 
 <section class="primary">
 
+
+<img src="<%= @user.photo_url %>" class="profile-img">
 
 <h1><%= @user.fname %>'s Posts</h1>
 
