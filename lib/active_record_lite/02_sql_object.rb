@@ -92,6 +92,36 @@ class SQLObject #< MassObject
     self.new(hash)
   end
 
+  def self.find_by_sql(query_string)
+    results = []
+    array = DBConnection.execute(query_string)
+    array.each do |hash|
+      results << self.new(hash)
+    end
+    results
+  end
+
+  def self.find_followers_of_user_number(id)
+    followers = []
+    array = DBConnection.execute(<<-SQL, id)
+      SELECT
+      users.*
+      FROM users -- join followings on users.id = followings.user_id
+      WHERE users.id in (
+        SELECT
+        followings.follower_id
+        FROM users JOIN followings ON users.id = followings.user_id
+        WHERE followings.user_id = $1
+      )
+      ORDER BY users.id;
+      SQL 
+
+    array.each do |hash|
+      followers << self.new(hash)
+    end
+    followers
+  end
+
 
   def initialize(params = {})
     cols = self.class.columns
@@ -118,7 +148,6 @@ class SQLObject #< MassObject
     end
 
     self.save
-
   end
 
   def attributes

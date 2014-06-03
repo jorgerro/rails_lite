@@ -27,6 +27,7 @@ CREATE TABLE users (
   lname VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password_digest VARCHAR(255) NOT NULL,
+  photo_url VARCHAR(255) NOT NULL,
   session_token VARCHAR(255) NOT NULL
 );
 
@@ -37,7 +38,30 @@ CREATE TABLE posts (
   author_id INTEGER NOT NULL
 );
 
+CREATE TABLE followings (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  follower_id INTEGER NOT NULL
+);
+
+-- query to find followers for a specific user
+-- SELECT
+-- users.*
+-- FROM users -- join followings on users.id = followings.user_id
+-- WHERE users.id in (
+--   SELECT
+--   followings.follower_id
+--   FROM users JOIN followings ON users.id = followings.user_id
+--   WHERE followings.user_id = 1
+-- )
+-- ORDER BY users.id;
+
 ALTER TABLE users ADD COLUMN photo_url VARCHAR(255);
+ALTER TABLE users ADD COLUMN updated_at TYPE?; # need to look up the datetime type for postgres
+ALTER TABLE users ADD COLUMN created_at TYPE?; 
+
+# !! make sure to add timestamps columns to users CREATE TABLE
+
 
 
 
