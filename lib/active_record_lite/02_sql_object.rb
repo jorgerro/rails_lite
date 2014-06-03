@@ -104,9 +104,8 @@ class SQLObject #< MassObject
   def self.find_followers_of_user_number(id)
     followers = []
     array = DBConnection.execute(<<-SQL, id)
-      SELECT
-      users.*
-      FROM users -- join followings on users.id = followings.user_id
+      SELECT users.*
+      FROM users
       WHERE users.id in (
         SELECT
         followings.follower_id
@@ -114,7 +113,7 @@ class SQLObject #< MassObject
         WHERE followings.user_id = $1
       )
       ORDER BY users.id;
-      SQL 
+      SQL
 
     array.each do |hash|
       followers << self.new(hash)

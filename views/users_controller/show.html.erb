@@ -127,8 +127,12 @@
 
 <section class="primary">
 
+<% unless @user.photo_url.empty? %>
+  <img src="<%= @user.photo_url %>" class="profile-img">
+<% else %>
+  <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+<% end %>
 
-<img src="<%= @user.photo_url %>" class="profile-img">
 
 <h1><%= @user.fname %>'s Posts</h1>
 
