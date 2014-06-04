@@ -92,14 +92,16 @@ class SQLObject #< MassObject
     self.new(hash)
   end
 
-  def self.find_by_sql(query_string)
-    results = []
-    array = DBConnection.execute(query_string)
-    array.each do |hash|
-      results << self.new(hash)
-    end
-    results
-  end
+  # This isn't complete, is it necessary?
+
+  # def self.find_by_sql(query_string)
+  #   results = []
+  #   array = DBConnection.execute(query_string)
+  #   array.each do |hash|
+  #     results << self.new(hash)
+  #   end
+  #   results
+  # end
 
   def self.find_followers_of_user_number(id)
     followers = []
@@ -120,6 +122,29 @@ class SQLObject #< MassObject
     end
     followers
   end
+
+  def self.find_users_followed_by_user_number(id)
+    followed_users = []
+    array = DBConnection.execute(<<-SQL, id)
+      SELECT users.*
+      FROM users
+      WHERE users.id in (
+        SELECT
+        followings.user_id
+        FROM users JOIN followings ON users.id = followings.user_id
+        WHERE followings.follower_id = $1
+      )
+      ORDER BY users.id;
+      SQL
+
+    array.each do |hash|
+      followed_users << self.new(hash)
+    end
+    followed_users
+  end
+
+
+
 
 
   def initialize(params = {})

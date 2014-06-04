@@ -121,6 +121,8 @@ class UsersController < AppController
     @current_user = current_user
     @user = User.find(params['id'].to_i)
     @posts = Post.where(author_id: @user.id).reverse
+    @followers = User.find_followers_of_user_number(@user.id)
+    @followees = User.find_users_followed_by_user_number(@user.id)
   end
 
   def edit
@@ -138,12 +140,9 @@ class UsersController < AppController
   def update
     @user = User.find(params['id'].to_i)
 
-    # update the user model's attributes and saves the model
+    # update the user model's attributes and saves the model to the db
     @user.update_attributes(params['user'])
 
-
-    # TODO: There is a bug here where it thinks the base url is the user show page,
-    # i.e. /users/5 
     redirect_to "/users/#{@user.id}"
   end
 

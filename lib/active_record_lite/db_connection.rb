@@ -72,8 +72,6 @@ class DBConnection
     # user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
     # The ruby pg gem does not support type translation
-    # @db.type_translation = true
-
     @conn
   end
 
@@ -88,7 +86,6 @@ class DBConnection
 
     results = []
     p args
-    # p self.instance.exec("SELECT * FROM statuses WHERE id = $1", ["1"])[0]
     res = self.instance.exec(args[0], args[1..-1])
     res.each do |result|
       results << result

@@ -157,6 +157,28 @@
 
 <% end %>
 
+<% unless @followers.empty? %>
+  
+  <h3>Followers</h3>
+  <% @followers.each do |follower| %>
+    <a href="/users/<%= follower.id %>">
+      <%= follower.fname %> <%= follower.lname %><br>
+    </a>
+  <% end %>
+
+<% end %>
+
+<% unless @followees.empty? %>
+  
+  <h3>Following</h3>
+  <% @followees.each do |followee| %>
+    <a href="/users/<%= followee.id %>">
+      <%= followee.fname %> <%= followee.lname %><br>
+    </a>
+  <% end %>
+
+<% end %>
+
 
 </section>
 </body>
