@@ -40,6 +40,9 @@ end
 class Post < SQLObject
 end
 
+class Following < SQLObject
+end
+
 
   #  CONTROLLERS
 
@@ -142,6 +145,17 @@ class UsersController < AppController
 
     # update the user model's attributes and saves the model to the db
     @user.update_attributes(params['user'])
+
+    redirect_to "/users/#{@user.id}"
+  end
+
+  def follow
+    @user = User.find(params['id'].to_i)
+
+    @following = Following.new(params['following'])
+    # maybe handle this with an ajax request?
+    # add form to user show view
+    # handle that request!
 
     redirect_to "/users/#{@user.id}"
   end
