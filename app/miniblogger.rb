@@ -113,7 +113,7 @@ class UsersController < AppController
     # save user
     @user.save
     
-    redirect_to "users"
+    redirect_to "/users"
   end
 
   def show
@@ -129,30 +129,22 @@ class UsersController < AppController
     @user = User.find(params['id'].to_i)
 
     # redirect if this page does not belong to the current user
-    # unless @user == @current_user
-    #   redirect_to "users"
-    #   return
-    # end
-
+    unless @user.id == @current_user.id
+      redirect_to "/users"
+      return
+    end
   end
 
   def update
-    p "In the update method"
-    # @signed_in = signed_in?
-    # @current_user = current_user
     @user = User.find(params['id'].to_i)
-    p "User before update"
-    p @user 
-    # p params['user']
 
     # update the user model's attributes and saves the model
     @user.update_attributes(params['user'])
-    p "new user"
-    p @user
+
 
     # TODO: There is a bug here where it thinks the base url is the user show page,
     # i.e. /users/5 
-    redirect_to ""
+    redirect_to "/users/#{@user.id}"
   end
 
 end
@@ -175,7 +167,7 @@ class PostsController < AppController
   def create
     @post = Post.new(params["post"])
     @post.save
-    redirect_to "posts"
+    redirect_to "/posts"
   end
 
 
@@ -212,6 +204,7 @@ router.draw do
   get Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :show
   get Regexp.new("^/users/(?<id>\\d+)/edit$"), UsersController, :edit
   post Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :update
+  post Regexp.new("^/users/(?<id>\\d+)/follow$"), UsersController, :follow
 end
 
 
