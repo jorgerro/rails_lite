@@ -141,11 +141,21 @@
   <a href="/posts/new">New Post</a><br>
   <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br>
 
-<% elsif @signed_in %>
+<% elsif @signed_in && !@followers.map(&:id).include?(@current_user.id) %>
+  
+  <!-- button to follow -->
+  <form action="/users/<%= @user.id %>/follow" method="post">
 
-<% else %>
+  <input type="hidden" name="following[follower_id]" value="<%= @current_user.id %>">
+  <input type="hidden" name="following[user_id]" value="<%= @user.id %>">
 
-  <a href="/session/new">Sign In to Write a New Post</a>
+    <input type="submit" value="Follow <%= @user.fname %>">
+
+  </form>
+
+ <%# elsif !@signed_in %>
+
+  <!-- <a href="/session/new">Sign In to Write a New Post</a> -->
 
 <% end %>
 
@@ -180,6 +190,7 @@
   <% end %>
 
 <% end %>
+
 
 
 </section>

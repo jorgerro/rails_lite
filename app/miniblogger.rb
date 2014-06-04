@@ -150,14 +150,15 @@ class UsersController < AppController
   end
 
   def follow
-    @user = User.find(params['id'].to_i)
+    # @user = User.find(params['id'].to_i)
 
     @following = Following.new(params['following'])
+    @following.save
     # maybe handle this with an ajax request?
     # add form to user show view
     # handle that request!
 
-    redirect_to "/users/#{@user.id}"
+    redirect_to "/users/#{ params['id'] }"
   end
 
 end
