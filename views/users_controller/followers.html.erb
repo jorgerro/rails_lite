@@ -59,10 +59,6 @@
 
   /* For Page */
 
-  p.post-body {
-    font-size: 16px;
-  }
-
   figure.thumbnail {
     display: inline-block;
     float: left;
@@ -80,6 +76,7 @@
     margin: 5px;
     display: inline-block;
   }
+
 
 
 </style>
@@ -135,29 +132,34 @@
 
 <section class="primary">
 
-
-<h1>Users</h1>
-<br>
+  <h1><%= @user.fname %>'s Followers</h1>
 
 
 
-<% @users.each do |user| %>
-  <a href="<%= "/users/#{ user.id }" %>">
-  <figure class="thumbnail">
-  <% unless user.photo_url.empty? %>
-    <img class="thumbnail-img" src="<%= user.photo_url %>" class="profile-img">
-  <% else %>
-    <img class="thumbnail-img" src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+<% unless @followers.empty? %>
+  
+  <% @followers.each do |user| %>
+    <a href="<%= "/users/#{ user.id }" %>">
+
+      <figure class="thumbnail">
+
+        <% unless user.photo_url.empty? %>
+          <img class="thumbnail-img" src="<%= user.photo_url %>" class="profile-img">
+        <% else %>
+          <img class="thumbnail-img" src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+        <% end %>
+
+        <figcaption class="img-caption">
+        <%= user.fname %> <%= user.lname %>
+        </figcaption>
+
+      </figure>
+
+    </a>
+
   <% end %>
 
-  <figcaption class="img-caption">
-  <%= user.fname %> <%= user.lname %>
-  </figcaption>
-  </figure>
-  </a>
-
 <% end %>
-
 
 
 </section>

@@ -83,6 +83,11 @@
     border-radius: 100%;
   }
 
+  a.follow {
+    display: inline-block;
+    float: right;
+  }
+
 
 
 </style>
@@ -138,72 +143,65 @@
 
 <section class="primary">
 
-<div class="profile-header">
-  <% unless @user.photo_url.empty? %>
-    <img src="<%= @user.photo_url %>" class="profile-img">
-  <% else %>
-    <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
-  <% end %>
+  <div class="profile-header">
+    <% unless @user.photo_url.empty? %>
+      <img src="<%= @user.photo_url %>" class="profile-img">
+    <% else %>
+      <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+    <% end %>
 
-  <h1><%= @user.fname %>'s Posts</h1>
-</div>
-
-<% if @signed_in && @current_user.id == @user.id %>
-
-  <a href="/posts/new">New Post</a> | 
-  <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br><br>
-
-<% elsif @signed_in && !@followers.map(&:id).include?(@current_user.id) %>
-  
-  <!-- button to follow -->
-  <form action="/users/<%= @user.id %>/follow" method="post">
-
-  <input type="hidden" name="following[follower_id]" value="<%= @current_user.id %>">
-  <input type="hidden" name="following[user_id]" value="<%= @user.id %>">
-
-    <input type="submit" value="Follow <%= @user.fname %>">
-
-  </form>
-
- <%# elsif !@signed_in %>
-
-  <!-- <a href="/session/new">Sign In to Write a New Post</a> -->
-
-<% end %>
-
-
-<% @posts.each do |post| %>
-
-  <div class="well bs-component">
-    <h2><%= post.title %></h2>
-    <p class="post-body"><%= post.body %></p>
+    <h1><%= @user.fname %>'s Posts</h1>
   </div>
 
-<% end %>
-
-<% unless @followers.empty? %>
+  <% unless @followers.empty? %>
   
-  <h3>Followers</h3>
-  <% @followers.each do |follower| %>
-    <a href="/users/<%= follower.id %>">
-      <%= follower.fname %> <%= follower.lname %><br>
+    <a class="follow" href="/users/<%= @user.id %>/followers">
+       / Followers <span>(<%= @followers.length %>)</span>
     </a>
+
   <% end %>
 
-<% end %>
-
-<% unless @followees.empty? %>
+  <% unless @followees.empty? %>
   
-  <h3>Following</h3>
-  <% @followees.each do |followee| %>
-    <a href="/users/<%= followee.id %>">
-      <%= followee.fname %> <%= followee.lname %><br>
+    <a class="follow" href="/users/<%= @user.id %>/followees">
+      People <%= @user.fname %> is Following <span>(<%= @followees.length %>) </span>
     </a>
+
   <% end %>
 
-<% end %>
+
+  <% if @signed_in && @current_user.id == @user.id %>
+
+    <a href="/posts/new">New Post</a> | 
+    <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br><br>
+
+  <% elsif @signed_in && !@followers.map(&:id).include?(@current_user.id) %>
+    
+    <!-- button to follow -->
+    <form action="/users/<%= @user.id %>/follow" method="post">
+
+    <input type="hidden" name="following[follower_id]" value="<%= @current_user.id %>">
+    <input type="hidden" name="following[user_id]" value="<%= @user.id %>">
+
+      <input type="submit" value="Follow <%= @user.fname %>">
+
+    </form>
+
+   <%# elsif !@signed_in %>
+
+    <!-- <a href="/session/new">Sign In to Write a New Post</a> -->
+
+  <% end %>
 
 
+  <% @posts.each do |post| %>
+
+    <div class="well bs-component">
+      <h2><%= post.title %></h2>
+      <p class="post-body"><%= post.body %></p>
+    </div>
+
+  <% end %>
 
 </section>
 </body>

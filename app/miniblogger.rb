@@ -168,11 +168,15 @@ class UsersController < AppController
   end
 
   def followers
+    @signed_in = signed_in?
+    @current_user = current_user
     @user = User.find(params['id'].to_i)
     @followers = User.find_followers_of_user_number(@user.id)
   end
 
   def followees
+    @signed_in = signed_in?
+    @current_user = current_user
     @user = User.find(params['id'].to_i)
     @followees = User.find_users_followed_by_user_number(@user.id)
   end
@@ -235,8 +239,8 @@ router.draw do
   get Regexp.new("^/users/(?<id>\\d+)/edit$"), UsersController, :edit
   post Regexp.new("^/users/(?<id>\\d+)$"), UsersController, :update
   post Regexp.new("^/users/(?<id>\\d+)/follow$"), UsersController, :follow
-  post Regexp.new("^/users/(?<id>\\d+)/followers$"), UsersController, :followers
-  post Regexp.new("^/users/(?<id>\\d+)/followees$"), UsersController, :followees
+  get Regexp.new("^/users/(?<id>\\d+)/followers$"), UsersController, :followers
+  get Regexp.new("^/users/(?<id>\\d+)/followees$"), UsersController, :followees
 end
 
 

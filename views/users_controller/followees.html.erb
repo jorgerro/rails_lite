@@ -59,8 +59,8 @@
 
   /* For Page */
 
-  p.post-body {
-    font-size: 16px;
+  h1 {
+    margin-bottom: 40px;
   }
 
   figure.thumbnail {
@@ -80,6 +80,7 @@
     margin: 5px;
     display: inline-block;
   }
+
 
 
 </style>
@@ -135,29 +136,38 @@
 
 <section class="primary">
 
-
-<h1>Users</h1>
-<br>
+  <h1>Blogs that <%= @user.fname %> is Following</h1>
 
 
 
-<% @users.each do |user| %>
-  <a href="<%= "/users/#{ user.id }" %>">
-  <figure class="thumbnail">
-  <% unless user.photo_url.empty? %>
-    <img class="thumbnail-img" src="<%= user.photo_url %>" class="profile-img">
-  <% else %>
-    <img class="thumbnail-img" src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+<% unless @followees.empty? %>
+  
+  <% @followees.each do |user| %>
+    <a href="<%= "/users/#{ user.id }" %>">
+
+      <figure class="thumbnail">
+
+        <% unless user.photo_url.empty? %>
+          <img class="thumbnail-img" src="<%= user.photo_url %>" class="profile-img">
+        <% else %>
+          <img class="thumbnail-img" src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+        <% end %>
+
+        <figcaption class="img-caption">
+        <%= user.fname %> <%= user.lname %>
+        </figcaption>
+
+      </figure>
+
+    </a>
+
   <% end %>
 
-  <figcaption class="img-caption">
-  <%= user.fname %> <%= user.lname %>
-  </figcaption>
-  </figure>
-  </a>
+<% else %>
+
+  <%= @user.fname %> is not currently following anyone.
 
 <% end %>
-
 
 
 </section>
