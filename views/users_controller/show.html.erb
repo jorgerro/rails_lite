@@ -63,10 +63,21 @@
     font-size: 16px;
   }
 
-  /* Style profile iamge */
+  /* Style profile image */
+
+  div.profile-header img {
+    margin: 10px auto;
+    display: block;
+  }  
+
+  div.profile-header h1 {
+    text-align: center;
+  }  
+
 
   img.profile-img {
     /* maybe make 100x100 circular?*/
+    display:inline-block;
     height: auto;
     width: 100px;
     border-radius: 100%;
@@ -127,19 +138,20 @@
 
 <section class="primary">
 
-<% unless @user.photo_url.empty? %>
-  <img src="<%= @user.photo_url %>" class="profile-img">
-<% else %>
-  <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
-<% end %>
+<div class="profile-header">
+  <% unless @user.photo_url.empty? %>
+    <img src="<%= @user.photo_url %>" class="profile-img">
+  <% else %>
+    <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
+  <% end %>
 
-
-<h1><%= @user.fname %>'s Posts</h1>
+  <h1><%= @user.fname %>'s Posts</h1>
+</div>
 
 <% if @signed_in && @current_user.id == @user.id %>
 
-  <a href="/posts/new">New Post</a><br>
-  <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br>
+  <a href="/posts/new">New Post</a> | 
+  <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br><br>
 
 <% elsif @signed_in && !@followers.map(&:id).include?(@current_user.id) %>
   
