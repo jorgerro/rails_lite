@@ -76,17 +76,37 @@
 
 
   img.profile-img {
-    /* maybe make 100x100 circular?*/
     display:inline-block;
     height: auto;
     width: 100px;
     border-radius: 100%;
   }
 
+  h1.title {
+    margin-bottom: 20px;
+  }
+
+  div.group:after {
+    content: "";
+    clear: both;
+    display: block;
+    /*height: 30px;*/
+  }
+
+  div.profile-links {
+    float: left;
+  }
+
   a.follow {
     display: inline-block;
     float: right;
+    text-transform: uppercase;
+    margin: 5px;
   }
+
+
+
+
 
 
 
@@ -150,40 +170,17 @@
       <img src="https://cdn.gbot.me/img/default_avatar.jpg" class="profile-img">
     <% end %>
 
-    <h1><%= @user.fname %>'s Posts</h1>
+    <h1 class="title"><%= @user.fname %>'s Posts</h1>
   </div>
 
-  <% unless @followers.empty? %>
-  
-    <a class="follow" href="/users/<%= @user.id %>/followers">
-       / Followers <span>(<%= @followers.length %>)</span>
-    </a>
-
-  <% end %>
-
-  <% unless @followees.empty? %>
-  
-    <a class="follow" href="/users/<%= @user.id %>/followees">
-      People <%= @user.fname %> is Following <span>(<%= @followees.length %>) </span>
-    </a>
-
-  <% end %>
-
-
-  <% if @signed_in && @current_user.id == @user.id %>
-
-    <a href="/posts/new">New Post</a> | 
-    <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br><br>
-
-  <% elsif @signed_in && !@followers.map(&:id).include?(@current_user.id) %>
+  <% if @signed_in && @current_user.id != @user.id && !@followers.map(&:id).include?(@current_user.id) %>
     
     <!-- button to follow -->
     <form action="/users/<%= @user.id %>/follow" method="post">
 
     <input type="hidden" name="following[follower_id]" value="<%= @current_user.id %>">
     <input type="hidden" name="following[user_id]" value="<%= @user.id %>">
-
-      <input type="submit" value="Follow <%= @user.fname %>">
+      <button type="submit" class="btn btn-primary">Follow <%= @user.fname %></button>
 
     </form>
 
@@ -192,6 +189,36 @@
     <!-- <a href="/session/new">Sign In to Write a New Post</a> -->
 
   <% end %>
+
+  <div class="group">
+
+    <div class="profile-links">
+      <% if @signed_in && @current_user.id == @user.id %>
+
+      <a href="/posts/new">New Post</a> | 
+      <a href="<%= "/users/#{@user.id}/edit" %>">Edit Profile</a><br><br>
+      
+      <% end %>
+    </div>
+
+
+
+    <% unless @followers.empty? %>
+      
+      <a class="follow" href="/users/<%= @user.id %>/followers">
+         Followers <span>(<%= @followers.length %>)</span>
+      </a>
+
+    <% end %>
+
+    <% unless @followees.empty? %>
+    
+      <a class="follow" href="/users/<%= @user.id %>/followees">
+        Following <span>(<%= @followees.length %>) </span>
+      </a>
+
+    <% end %>
+  </div>
 
 
   <% @posts.each do |post| %>
