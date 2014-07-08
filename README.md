@@ -6,5 +6,5 @@
 ## MiniBlogger
 0.  A _miniature_ blogging platform built on ThirdRail
 
-You `can't quite` find it at [miniblogger.com](#).
+You find it at [thirdrail.herokuapp.com](http://thirdrail.herokuapp.com/).
 
